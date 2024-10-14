@@ -66,8 +66,6 @@ kotlin {
             implementation(libs.mongodb.realm)
             implementation(libs.kotlin.coroutines)
             implementation(libs.stately.common)
-
-            implementation(libs.androidx.ui.text.google.fonts)
         }
 
         iosMain.dependencies {

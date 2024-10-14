@@ -1,5 +1,5 @@
 [versions]
-agp = "8.6.0"
+agp = "8.6.1"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -8,11 +8,11 @@ androidx-lifecycle = "2.8.2"
 compose-plugin = "1.6.11"
 kotlin = "2.0.20"
 ktor = "2.3.9"
-date-time = "0.5.0"
+date-time = "0.6.0"
+realm="2.3.0"
 multiplatformSettings = "1.1.1"
 voyager = "1.0.0"
 koinCore = "3.5.3"
-realm = "1.13.0"
 coroutines = "1.8.0"
 statelyCommon = "2.0.5"
 uiTextGoogleFonts = "1.7.3"
@@ -39,10 +39,10 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 
-kotlinx-datetime = { module = "org.jetbrain.kotlinx:kotlinx-datetime", version.ref = "date-time" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "date-time" }
 
 mongodb-realm = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
-kotlin-coroutines = { module = "org.jetbrains.kotilnx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 stately-common = { module = "co.touchlab:stately-common", version.ref = "statelyCommon" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 

@@ -1,8 +1,10 @@
 package com.florientmanfo.currencyapp.data.remote.api
 
 import com.florientmanfo.currencyapp.domain.CurrencyApiService
+import com.florientmanfo.currencyapp.domain.PreferencesRepository
 import com.florientmanfo.currencyapp.domain.model.ApiResponse
 import com.florientmanfo.currencyapp.domain.model.Currency
+import com.florientmanfo.currencyapp.domain.model.CurrencyCode
 import com.florientmanfo.currencyapp.domain.model.RequestState
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -14,10 +16,12 @@ import io.ktor.client.request.headers
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-class CurrencyApiService: CurrencyApiService {
+class CurrencyApiServiceImpl(
+    private val preferences: PreferencesRepository
+): CurrencyApiService {
     companion object{
-        const val ENDPOINT = "cur_live_aIcTUtSqldqYspa0uBEBhJsHlDrhswDXwZniYRrJ"
-        const val API_KEY = "https://api.currencyapi.com/v3/latest"
+        const val ENDPOINT = "https://api.currencyapi.com/v3/latest"
+        const val API_KEY = "cur_live_aIcTUtSqldqYspa0uBEBhJsHlDrhswDXwZniYRrJ"
     }
 
     private val httpClient = HttpClient {
@@ -42,8 +46,25 @@ class CurrencyApiService: CurrencyApiService {
         return try {
             val response = httpClient.get(ENDPOINT)
             if(response.status.value == 200){
+                println("API RESPONSE: ${response.body<String>()}")
                 val apiResponse = Json.decodeFromString<ApiResponse>(response.body())
-                RequestState.Success(data = apiResponse.data.values.toList())
+
+                val availableCurrencyCodes = apiResponse.data.keys.filter {
+                    CurrencyCode.entries
+                        .map { code -> code.name  }
+                        .toSet()
+                        .contains(it)
+                }
+
+                val availableCurrencies = apiResponse.data.values
+                    .filter { currency ->
+                        availableCurrencyCodes.contains(currency.code)
+                    }
+
+                val lastUpdated = apiResponse.meta.lastUpdatedAt
+                preferences.saveLastUpdated(lastUpdated)
+
+                RequestState.Success(data = availableCurrencies)
             } else {
                 throw Exception("HTTP error code: ${response.status}")
             }
