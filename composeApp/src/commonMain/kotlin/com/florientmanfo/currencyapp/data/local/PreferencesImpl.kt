@@ -42,7 +42,7 @@ class PreferencesImpl(
 
             val dayDifference = currentDateTime.date.dayOfYear - savedDateTime.date.dayOfYear
 
-            dayDifference < 1
+            dayDifference <= 1
         } else false
     }
 }
