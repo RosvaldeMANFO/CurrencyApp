@@ -5,15 +5,15 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import com.florientmanfo.currencyapp.domain.CurrencyApiService
 import com.florientmanfo.currencyapp.domain.PreferencesRepository
 import com.florientmanfo.currencyapp.domain.model.RateStatus
+import com.florientmanfo.currencyapp.domain.usecase.FetchNewRatesUseCase
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 
 class HomeViewModel(
     private val preferences: PreferencesRepository,
-    private val api: CurrencyApiService
+    private val fetchNewRatesUseCase: FetchNewRatesUseCase
 ) : ScreenModel {
     private val _screenState: MutableState<HomeScreenState> = mutableStateOf(HomeScreenState())
     val screenState: State<HomeScreenState> = _screenState
@@ -21,7 +21,6 @@ class HomeViewModel(
     init {
         screenModelScope.launch {
             fetchNewRates()
-            getRateStatus()
         }
     }
 
@@ -36,22 +35,21 @@ class HomeViewModel(
     }
 
     private suspend fun fetchNewRates() {
-        try {
-            api.getLatestExchangeRate()
+        fetchNewRatesUseCase().also { currencies ->
+            _screenState.value = _screenState.value.copy(allCurrencies = currencies)
             getRateStatus()
-        } catch (e: Exception) {
-            println(e.message)
         }
     }
 
     private suspend fun getRateStatus() {
-        val rateStatus = if (preferences.isDataFresh(
-                currentTimestamp = Clock.System.now().toEpochMilliseconds()
-            )
-        ) RateStatus.Fresh
-        else RateStatus.Stale
-        _screenState.value = _screenState.value
-            .copy(rateStatus = rateStatus)
+        preferences.isDataFresh(
+            currentTimestamp = Clock.System.now().toEpochMilliseconds()
+        ).collect { value ->
+            _screenState.value = _screenState.value
+                .copy(
+                    rateStatus = if (value) RateStatus.Fresh else RateStatus.Stale
+                )
+        }
     }
 }
 

@@ -6,6 +6,8 @@ import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.coroutines.FlowSettings
 import com.russhwolf.settings.coroutines.toFlowSettings
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -27,22 +29,22 @@ class PreferencesImpl(
         )
     }
 
-    override suspend fun isDataFresh(currentTimestamp: Long): Boolean {
-        val savedTimestamp = flowSettings.getLong(
+    override suspend fun isDataFresh(currentTimestamp: Long): Flow<Boolean> {
+       return  flowSettings.getLongFlow(
             key = TIMESTAMP_KEY,
             defaultValue = 0L
-        )
+        ).map { value ->
+           if (value != 0L) {
+               val currentInstant = Instant.fromEpochMilliseconds(currentTimestamp)
+               val savedInstant = Instant.fromEpochMilliseconds(value)
 
-        return if (savedTimestamp != 0L) {
-            val currentInstant = Instant.fromEpochMilliseconds(currentTimestamp)
-            val savedInstant = Instant.fromEpochMilliseconds(savedTimestamp)
+               val currentDateTime = currentInstant.toLocalDateTime(TimeZone.currentSystemDefault())
+               val savedDateTime = savedInstant.toLocalDateTime(TimeZone.currentSystemDefault())
 
-            val currentDateTime = currentInstant.toLocalDateTime(TimeZone.currentSystemDefault())
-            val savedDateTime = savedInstant.toLocalDateTime(TimeZone.currentSystemDefault())
+               val dayDifference = currentDateTime.date.dayOfYear - savedDateTime.date.dayOfYear
 
-            val dayDifference = currentDateTime.date.dayOfYear - savedDateTime.date.dayOfYear
-
-            dayDifference <= 1
-        } else false
+               dayDifference <= 1
+           } else false
+       }
     }
 }

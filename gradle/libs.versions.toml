@@ -9,13 +9,12 @@ compose-plugin = "1.6.11"
 kotlin = "2.0.20"
 ktor = "2.3.9"
 date-time = "0.6.0"
-realm="2.3.0"
+realm="3.0.0"
 multiplatformSettings = "1.1.1"
 voyager = "1.0.0"
 koinCore = "3.5.3"
 coroutines = "1.8.0"
 statelyCommon = "2.0.5"
-uiTextGoogleFonts = "1.7.3"
 
 
 [libraries]
@@ -44,7 +43,6 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 mongodb-realm = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 stately-common = { module = "co.touchlab:stately-common", version.ref = "statelyCommon" }
-androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

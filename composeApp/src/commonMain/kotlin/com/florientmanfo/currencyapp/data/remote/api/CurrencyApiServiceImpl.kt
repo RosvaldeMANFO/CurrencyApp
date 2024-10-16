@@ -21,7 +21,7 @@ class CurrencyApiServiceImpl(
 ): CurrencyApiService {
     companion object{
         const val ENDPOINT = "https://api.currencyapi.com/v3/latest"
-        const val API_KEY = "cur_live_aIcTUtSqldqYspa0uBEBhJsHlDrhswDXwZniYRrJ"
+        const val API_KEY = "cur_live_fPmy4B5VEodSzcv5bOQkdPDOnmiHLKFS20LUNNfM"
     }
 
     private val httpClient = HttpClient {

@@ -8,5 +8,6 @@ data class HomeScreenState(
     val rateStatus: RateStatus = RateStatus.Idle,
     val sourceCurrency: RequestState<Currency> = RequestState.Idle,
     val targetCurrency: RequestState<Currency> = RequestState.Idle,
+    val allCurrencies: List<Currency> = mutableListOf(),
     val amount: Double = 0.0
 )
