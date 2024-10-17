@@ -61,7 +61,7 @@ fun HomeBody(
             Text(
                 text = "${(animatedExchangedAmount * 100).toLong() / 100.0}",
                 modifier = Modifier.fillMaxWidth(),
-                fontSize = MaterialTheme.typography.displaySmall.fontSize,
+                fontSize = MaterialTheme.typography.displayLarge.fontSize,
                 fontFamily = customFont(),
                 textAlign = TextAlign.Center,
             )
