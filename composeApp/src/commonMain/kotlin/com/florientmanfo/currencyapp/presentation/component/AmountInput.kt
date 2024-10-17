@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -32,10 +33,10 @@ fun AmountInput(
         value = "$amount",
         onValueChange = { onAmountChange(it.toDouble())},
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5F),
-            unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5F),
-            disabledContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5F),
-            errorContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5F),
+            focusedContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.05F),
+            unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.05F),
+            disabledContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.05F),
+            errorContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.05F),
             focusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,

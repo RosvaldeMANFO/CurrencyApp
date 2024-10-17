@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.florientmanfo.currencyapp.domain.model.Currency
+import com.florientmanfo.currencyapp.domain.model.CurrencyType
 import com.florientmanfo.currencyapp.domain.model.RateStatus
 import com.florientmanfo.currencyapp.domain.model.RequestState
 import com.florientmanfo.currencyapp.ui.theme.staleColor
@@ -41,6 +42,7 @@ fun HomeHeader(
     onAmountChange: (Double) -> Unit,
     onRateRefresh: () -> Unit,
     onSwitchClick: () -> Unit,
+    onCurrencyTypeSelected: (CurrencyType) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -57,7 +59,8 @@ fun HomeHeader(
         CurrencyInputs(
             source = source,
             target = target,
-            onSwitchClick = onSwitchClick
+            onSwitchClick = onSwitchClick,
+            onCurrencyTypeSelected = onCurrencyTypeSelected
         )
         AmountInput(
             amount = amount,

@@ -5,6 +5,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontFamily
+import currencyapp.composeapp.generated.resources.Res
+import currencyapp.composeapp.generated.resources.bebase_neue_regular
+import org.jetbrains.compose.resources.Font
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -88,10 +92,9 @@ fun CurrencyAppThem(
     content: @Composable() () -> Unit
 ) {
     val colorScheme = if (darkTheme) darkScheme else lightScheme
-
     MaterialTheme(
         colorScheme = colorScheme,
-        content = content
+        content = content,
     )
 }
 
